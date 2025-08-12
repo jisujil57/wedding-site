@@ -1,0 +1,548 @@
+:root {
+  --accent-color: #c96a2f;
+  --light-text: #ffffff;
+  --dark-text: #222;
+
+  --photo-main: url('./images/IMG_3834.jpg');
+  --photo-2: url('./images/14.jpg');
+  --photo-3: url('./images/16.jpg');
+  --photo-4: url('./images/14.jpg');
+
+  --section-padding-left: 20px;
+  --section-padding-right: 20px;
+}
+
+/* Сброс */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  font-family: 'Roboto', sans-serif;
+  background: #fff;
+  color: var(--dark-text);
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* Контейнер скролла */
+[data-scroll-container] {
+  position: relative;
+  overflow: visible;
+  min-height: 100vh;
+}
+
+/* Секции */
+.panel-wrap {
+  min-height: 100vh;
+  padding: 80px 20px 80px 20px; /* базовые паддинги */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: center/cover no-repeat var(--light-text);
+  color: var(--light-text);
+}
+
+.panel-wrap:nth-of-type(1) {
+  background-image: var(--photo-main);
+}
+
+.panel-wrap:nth-of-type(2) {
+  background-image: var(--photo-2);
+  padding-left: 50%;
+  padding-right: 5%;
+}
+
+.panel-wrap:nth-of-type(3) {
+  background-image: var(--photo-3);
+  padding-left: 5%;
+  padding-right: 50%;
+}
+
+.panel-wrap:nth-of-type(4) {
+  background-image: var(--photo-4);
+  padding-left: 50%;
+  padding-right: 5%;
+}
+
+.panel-wrap.last {
+  padding-bottom: 60px;
+}
+
+/* Контент */
+.content {
+  position: relative;
+  z-index: 2;
+  max-width: 1400px;
+  padding: 0 20px;
+  text-align: left;
+  font-size: 1.1rem;
+}
+
+.panel-wrap:nth-of-type(2) .content,
+.panel-wrap:nth-of-type(3) .content,
+.panel-wrap:nth-of-type(4) .content {
+  max-width: 660px;
+}
+
+/* Заголовки */
+h1.great-vibes {
+  font-family: "Great Vibes", cursive;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 145px;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.04em;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  line-height: 1;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
+  max-width: none;
+}
+
+h2 {
+  font-family: 'Shafarik', serif;
+  font-size: 2.2rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  letter-spacing: 0.02em;
+  font-variant: small-caps;
+}
+
+/* Текст */
+p {
+  font-size: 1.1rem;
+  margin-bottom: 1.2em;
+}
+
+/* Таймлайн */
+.timeline {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 1rem;
+  display: inline-block;
+  text-align: left;
+  border-left: 3px solid var(--accent-color);
+}
+
+.timeline li {
+  position: relative;
+  margin: 12px 0;
+  padding-left: 18px;
+  font-size: 1.05rem;
+}
+
+.timeline li::before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: -28px;
+  width: 12px;
+  height: 12px;
+  background: var(--accent-color);
+  border-radius: 50%;
+  box-shadow: 0 0 5px var(--accent-color);
+}
+
+.timeline time {
+  font-weight: 700;
+  color: var(--accent-color);
+  margin-right: 8px;
+  font-variant: small-caps;
+}
+
+/* Ссылки */
+a {
+  color: var(--accent-color);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent-color);
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+a:hover {
+  color: #e78c48;
+  border-color: #e78c48;
+}
+
+/* Таймер обратного отсчёта */
+.countdown {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(30, 30, 30, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #f0f0f0;
+  padding: 14px 24px;
+  border-radius: 32px;
+  display: flex;
+  gap: 20px;
+  z-index: 9999;
+  font-weight: 900;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  user-select: none;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.countdown-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 60px;
+}
+
+.countdown-number {
+  font-size: 2.2rem;
+  line-height: 1;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+}
+
+.countdown-label {
+  font-size: 0.75rem;
+  color: #bbb;
+  text-transform: uppercase;
+  margin-top: 4px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+/* Тема для текста — светлая */
+.text-light {
+  color: var(--light-text);
+}
+
+/* Тема для текста — тёмная */
+.text-dark {
+  color: #676767;
+}
+
+/* Можно отдельно для заголовков */
+.heading-light {
+  color: var(--light-text);
+}
+
+.heading-dark {
+  color: #494949;
+}
+
+/* Новые классы для шрифтов */
+.literata700 {
+  font-family: 'Literata', serif;
+  font-weight: 700;
+  text-transform: none;
+  font-style: normal;
+}
+
+.montserrat400 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  text-transform: none;
+  font-style: normal;
+}
+
+.pacifico {
+  font-family: 'Pacifico', cursive;
+  font-weight: 400;
+  font-style: normal;
+  text-align: center;
+}
+
+/* Фон с фото и блюром */
+
+/* Основной блок фото */
+.photo-backgrounds {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+}
+
+/* Фото блок */
+.photo {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  overflow: hidden;
+}
+
+/* Активное фото */
+.photo.active {
+  opacity: 1;
+  z-index: 0;
+  position: absolute;
+  top: 0; left: 0;
+}
+
+/* Другие мелкие стили для футера */
+.site-footer {
+  padding: 20px 0;
+  text-align: center;
+  font-size: 0.8rem;
+  color: #555;
+  background: #fefefe;
+  border-top: 1px solid #ddd;
+}
+
+.venue a {
+  text-decoration: underline;
+}
+
+/* --- Адаптив --- */
+
+/* Планшеты и большие мобильные (до 1024px) */
+@media (max-width: 1024px) {
+  .panel-wrap {
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+  .content {
+    max-width: 100% !important;
+    padding-left: 20px;
+    padding-right: 20px;
+    text-align: left;
+  }
+  h1.great-vibes {
+    font-size: 8vw;
+    margin-bottom: 1.2rem;
+    white-space: normal;
+    text-align: center;
+  }
+  h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    text-align: left;
+  }
+  p {
+    font-size: 1.05rem;
+    margin-bottom: 1rem;
+    text-align: left;
+  }
+  .timeline {
+    max-width: 100%;
+    padding-left: 12px;
+    border-left-width: 3px;
+    text-align: left !important;
+    margin-bottom: 2.5rem;
+  }
+  .timeline li {
+    font-size: 1rem;
+    padding-left: 16px;
+  }
+  .timeline li::before {
+    left: -22px;
+    width: 10px;
+    height: 10px;
+    top: 0.6em;
+  }
+  .venue {
+    max-width: 100%;
+    text-align: left !important;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .venue h2 {
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    text-align: left !important;
+  }
+  .venue p {
+    font-size: 1.05rem;
+    margin-bottom: 1rem;
+    text-align: left !important;
+  }
+}
+
+/* Маленькие планшеты и крупные телефоны (до 768px) */
+@media (max-width: 768px) {
+  .panel-wrap {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+  .content {
+    max-width: 100% !important;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  h1.great-vibes {
+    font-size: 10vw;
+    margin-bottom: 1rem;
+    line-height: 1.1;
+    text-align: center;
+  }
+  h2 {
+    font-size: 1.6rem;
+    text-align: center;
+    margin-bottom: 0.8rem;
+  }
+  p {
+    font-size: 1rem;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  .timeline {
+    max-width: 100%;
+    padding-left: 10px;
+    border-left-width: 2px;
+    text-align: left !important;
+    margin-bottom: 2rem;
+  }
+  .timeline li {
+    padding-left: 12px;
+    font-size: 0.95rem;
+  }
+  .timeline li::before {
+    left: -16px;
+    width: 8px;
+    height: 8px;
+    top: 0.5em;
+  }
+  .venue {
+    text-align: left !important;
+    max-width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .venue h2 {
+    text-align: left !important;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  .venue p {
+    font-size: 1rem;
+    text-align: left !important;
+    margin-bottom: 0.8rem;
+  }
+  .countdown {
+    padding: 10px 16px;
+    gap: 12px;
+    font-size: 0.85rem;
+    bottom: 15px;
+  }
+  .countdown-number {
+    font-size: 1.6rem;
+  }
+  .countdown-label {
+    font-size: 0.6rem;
+  }
+  .countdown-item {
+    min-width: 45px;
+  }
+}
+
+/* Мобильные устройства (до 480px) */
+@media (max-width: 480px) {
+  .content {
+    max-width: 100% !important;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  h1.great-vibes {
+    font-size: 12vw;
+    margin-bottom: 0.8rem;
+    line-height: 1.1;
+    text-align: center;
+  }
+  h2 {
+    font-size: 1.4rem;
+    margin-bottom: 0.6rem;
+    text-align: center;
+  }
+  p {
+    font-size: 0.95rem;
+    margin-bottom: 0.6rem;
+    text-align: center;
+  }
+  .timeline {
+    padding-left: 8px;
+    border-left-width: 2px;
+    text-align: left !important;
+    margin-bottom: 1.8rem;
+  }
+  .timeline li {
+    padding-left: 10px;
+    font-size: 0.9rem;
+  }
+  .timeline li::before {
+    left: -14px;
+    width: 6px;
+    height: 6px;
+    top: 0.5em;
+  }
+  .venue {
+    text-align: left !important;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .venue h2 {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    text-align: left !important;
+  }
+  .venue p {
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+    text-align: left !important;
+  }
+  .countdown {
+    padding: 8px 12px;
+    gap: 8px;
+    font-size: 0.7rem;
+    bottom: 30px;
+  }
+  .countdown-number {
+    font-size: 1.3rem;
+  }
+  .countdown-label {
+    font-size: 0.55rem;
+  }
+  .countdown-item {
+    min-width: 35px;
+  }
+}
+
+/* Очень маленькие экраны (до 360px) */
+@media (max-width: 360px) {
+  h1.great-vibes {
+    font-size: 14vw;
+    margin-bottom: 0.6rem;
+    text-align: center;
+  }
+  h2 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+  p {
+    font-size: 0.9rem;
+    margin-bottom: 0.4rem;
+  }
+  .timeline li {
+    font-size: 0.85rem;
+  }
+  .venue p {
+    font-size: 0.9rem;
+  }
+}
