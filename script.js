@@ -2,10 +2,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const scrollEl = document.querySelector('[data-scroll-container]');
   const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
+  gsap.registerPlugin(ScrollTrigger);
+
   // Функция для анимации элементов появления с прокруткой
   function animateElements(scroller = null) {
-    const animatedElems = document.querySelectorAll('.content > *'); // например, все дочерние элементы .content
-    
+    const animatedElems = document.querySelectorAll('.content > *');
+
     animatedElems.forEach(elem => {
       gsap.from(elem, {
         opacity: 0,
@@ -14,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ease: 'power2.out',
         scrollTrigger: {
           trigger: elem,
-          scroller: scroller,       // null или scrollEl (для Locomotive)
+          scroller: scroller,       // null для нативного скролла или scrollEl для Locomotive
           start: 'top 80%',
           toggleActions: 'play none none none',
         }
@@ -23,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   if (!isMobile) {
-    // Инициализация Locomotive Scroll
+    // Инициализация Locomotive Scroll для ПК
     const scroll = new LocomotiveScroll({
       el: scrollEl,
       smooth: true,
@@ -32,16 +34,12 @@ document.addEventListener('DOMContentLoaded', () => {
       smartphone: { smooth: true },
     });
 
-    // Интеграция с GSAP ScrollTrigger
-    gsap.registerPlugin(ScrollTrigger);
-
+    // Интеграция с ScrollTrigger
     scroll.on('scroll', ScrollTrigger.update);
 
     ScrollTrigger.scrollerProxy(scrollEl, {
       scrollTop(value) {
-        return arguments.length
-          ? scroll.scrollTo(value, 0, 0)
-          : scroll.scroll.instance.scroll.y;
+        return arguments.length ? scroll.scrollTo(value, 0, 0) : scroll.scroll.instance.scroll.y;
       },
       getBoundingClientRect() {
         return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight };
@@ -52,9 +50,9 @@ document.addEventListener('DOMContentLoaded', () => {
     ScrollTrigger.addEventListener('refresh', () => scroll.update());
     ScrollTrigger.refresh();
 
-    // Смена фото при скролле
+    // Смена фото при скролле (если нужна)
     const photos = document.querySelectorAll('.photo-backgrounds .photo');
-    scroll.on('call', (func) => {
+    scroll.on('call', func => {
       if (func.startsWith('panel-')) {
         const index = parseInt(func.split('-')[1], 10);
         photos.forEach((photo, i) => {
@@ -63,15 +61,13 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Запускаем анимацию с передачей scrollEl как scroller
     animateElements(scrollEl);
 
     window.addEventListener('load', () => {
       scroll.update();
     });
   } else {
-    // Для мобильных — обычный скролл без Locomotive
-    gsap.registerPlugin(ScrollTrigger);
+    // Мобильная версия — обычный нативный скролл и анимации
     animateElements(null);
   }
 
