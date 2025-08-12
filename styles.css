@@ -3,10 +3,10 @@
   --light-text: #ffffff;
   --dark-text: #222;
 
-  --photo-main: url('./images/IMG_3834.jpg');
-  --photo-2: url('./images/14.jpg');
-  --photo-3: url('./images/16.jpg');
-  --photo-4: url('./images/14.jpg');
+  --photo-main: url('./images/IMG_3834.webp');
+  --photo-2: url('./images/14.webp');
+  --photo-3: url('./images/16.webp');
+  --photo-4: url('./images/14.webp');
 
   --section-padding-left: 20px;
   --section-padding-right: 20px;
