@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Вячеслав &amp; Олеся — приглашение</title>
+  <meta name="description" content="Приглашение на свадьбу Вячеслава и Олеси. Роспись, фотосессия и ужин — детали и контакты." />
+
+  <!-- шрифты как в оригинале -->
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond&display=swap" rel="stylesheet">
+
+  <style>
+    /* === оригинальные стили из CodePen (не менял визуал/картинки) === */
+    * { box-sizing: border-box; user-select: none; }
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      color: white;
+      background: black;
+      font-family: "Cormorant Garamond", serif;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      font-size: clamp(1rem, 5vw, 5rem);
+      font-weight: 400;
+      text-align: center;
+      letter-spacing: 0.5em;
+      margin-right: -0.5em;
+      color: hsl(0, 0, 80%);
+      width: 90vw;
+      max-width: 1200px;
+    }
+
+    header {
+      position: fixed;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5%;
+      width: 100%;
+      z-index: 3;
+      height: 7em;
+      font-family: "Bebas Neue", sans-serif;
+      font-size: clamp(0.66rem, 2vw, 1rem);
+      letter-spacing: 0.5em;
+    }
+
+    section {
+      height: 100%;
+      width: 100%;
+      top: 0;
+      position: fixed;
+      visibility: hidden;
+      will-change: transform;
+    }
+
+    .outer, .inner {
+      width: 100%;
+      height: 100%;
+      overflow-y: hidden;
+      will-change: transform;
+    }
+
+    .bg {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      top: 0;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .bg h2 { z-index: 2; }
+    .clip-text { overflow: hidden; }
+
+    /* фоновые изображения и градиент (как в оригинале) */
+    .first .bg {
+      background-image: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 100%),
+        url(https://images.unsplash.com/photo-1617478755490-e21232a5eeaf?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTYxNzU1NjM5NA&ixlib=rb-1.2.1&q=75&w=1920);
+    }
+    .second .bg {
+      background-image: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 100%),
+        url("https://images.unsplash.com/photo-1617128734662-66da6c1d3505?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTYxNzc3NTM3MA&ixlib=rb-1.2.1&q=75&w=1920");
+    }
+    .third .bg {
+      background-image: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 100%),
+        url(https://images.unsplash.com/photo-1617438817509-70e91ad264a5?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTYxNzU2MDk4Mg&ixlib=rb-1.2.1&q=75&w=1920);
+    }
+    .fourth .bg {
+      background-image: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 100%),
+        url(https://images.unsplash.com/photo-1617412327653-c29093585207?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTYxNzU2MDgzMQ&ixlib=rb-1.2.1&q=75&w=1920);
+    }
+    .fifth .bg {
+      background-image: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 100%),
+        url("https://images.unsplash.com/photo-1617141636403-f511e2d5dc17?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTYxODAzMjc4Mw&ixlib=rb-1.2.1&q=75w=1920");
+      background-position: 50% 45%;
+    }
+
+    body .bg { transform: translateZ(0); }
+
+    /* дополнительные стили для текста/таймлайна/счётчика (патч) */
+    .panel-extra {
+      max-width: 1100px;
+      padding: 0 5vw;
+      text-align: center;
+    }
+
+    /* === Патч: заголовок сверху, текст снизу, основной текст 18pt === */
+    .bg {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      padding: 2rem 3rem;
+      box-sizing: border-box;
+    }
+
+    .bg .section-heading {
+      margin: 0;
+      padding: 0;
+      line-height: 1;
+      z-index: 2;
+      /* Заголовки остаются прежнего размера (clamp в h2) */
+    }
+
+    .panel-extra {
+      max-width: 900px;
+      width: 100%;
+      margin-top: 0;
+      text-align: center;
+    }
+
+    /* Основной текст — 18pt */
+    .panel-extra p,
+    .panel-extra li {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 18pt;
+      line-height: 1.45;
+      color: rgba(255,255,255,0.95);
+      margin: 0.4rem 0;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .timeline {
+      list-style: none;
+      padding-left: 0;
+      margin: 1.2rem auto;
+      display: inline-block;
+      text-align: left;
+      border-left: 3px solid rgba(255,255,255,0.25);
+      padding-left: 1rem;
+    }
+
+    .timeline li {
+      font-size: 18pt;
+      margin: 12px 0;
+      padding-left: 18px;
+      color: rgba(255,255,255,0.95);
+    }
+
+    .timeline li::before {
+      content: '';
+      position: absolute;
+      top: 6px;
+      left: -28px;
+      width: 12px;
+      height: 12px;
+      background: rgba(255,255,255,0.85);
+      border-radius: 50%;
+      box-shadow: 0 0 5px rgba(255,255,255,0.15);
+    }
+
+    .panel-extra a {
+      color: #fff;
+      text-decoration: underline;
+    }
+
+    .countdown {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.6);
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 999px;
+      display: flex;
+      gap: 12px;
+      z-index: 50;
+      font-family: "Cormorant Garamond", serif;
+    }
+    .countdown-item { text-align: center; min-width: 50px; }
+    .countdown-number { font-weight: 700; font-size: 1.2rem; display:block; }
+    .countdown-label { font-size: 0.7rem; opacity: 0.8; }
+
+    /* Мобильная адаптация: уменьшаем до 16pt на узких экранах */
+    @media (max-width: 600px) {
+      .panel-extra p,
+      .panel-extra li {
+        font-size: 16pt;
+      }
+      h2 { font-size: clamp(1rem, 7vw, 3rem); }
+      .bg { padding: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div>Animated Sections</div>
+    <div>Original: BrianCross</div>
+  </header>
+
+  <!-- 7 секций: добавлены отдельные слайды для ДРЕСС-КОД и КОНТАКТОВ -->
+  <section class="first">
+    <div class="outer">
+      <div class="inner">
+        <div class="bg one">
+          <h2 class="section-heading">Роспись</h2>
+          <div class="panel-extra" aria-hidden="false">
+            <p style="margin-top:0.8rem; color: rgba(255,255,255,0.95);">
+              Вячеслав &amp; Олеся приглашают вас на роспись — начало праздника и тёплая встреча близких.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="second">
+    <div class="outer">
+      <div class="inner">
+        <div class="bg">
+          <h2 class="section-heading">Вячеслав &amp; Олеся</h2>
+          <div class="panel-extra" aria-hidden="false">
+            <p>Приглашаем вас разделить с нами самый важный день — нашу свадьбу!</p>
+            <p>Мы решили идти по жизни вместе и с радостью готовимся к этому событию. Ваше присутствие сделает этот момент ещё теплее и веселее!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Таймлайн -->
+  <section class="third">
+    <div class="outer">
+      <div class="inner">
+        <div class="bg">
+          <h2 class="section-heading">ТАЙМЛАЙН ПРАЗДНИКА</h2>
+
+          <div class="panel-extra" aria-hidden="false">
+            <ul class="timeline" aria-label="Таймлайн">
+              <li><time datetime="2025-09-09T15:30">15:30</time> — Роспись в ЗАГСе</li>
+              <li><time datetime="2025-09-09T16:30">16:30</time> — Прогулка и фотосессия</li>
+              <li><time datetime="2025-09-09T18:00">18:00</time> — Ужин в ресторане «Чарли»</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Отдельный слайд ДРЕСС-КОД -->
+  <section class="fourth">
+    <div class="outer">
+      <div class="inner">
+        <div class="bg">
+          <h2 class="section-heading">ДРЕСС-КОД</h2>
+
+          <div class="panel-extra" aria-hidden="false">
+            <p>Просим гостей выбрать торжественный стиль: мужчины — костюм / пиджак, женщины — коктейльные платья или элегантные наряды. Избегайте спортивной одежды.</p>
+            <p>Если у вас есть вопросы по образу — напишите заранее, поможем с советом.</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Места проведения -->
+  <section class="fifth">
+    <div class="outer">
+      <div class="inner">
+        <div class="bg">
+          <h2 class="section-heading">МЕСТА ПРОВЕДЕНИЯ</h2>
+
+          <div class="panel-extra" aria-hidden="false">
+            <p><strong>ЗАГС:</strong> ул. Пролетарская Гора, 1, Орёл — <a href="https://www.google.com/maps/search/?api=1&query=ул.+Пролетарская+Гора,+1,+Орёл">показать на карте</a></p>
+            <p><strong>Ресторан «Чарли»: </strong> Октябрьская улица, 27, Орёл — <a href="https://www.google.com/maps/search/?api=1&query=Октябрьская+улица,+27,+Орёл">показать на карте</a></p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Отдельный слайд КОНТАКТЫ (переиспользует фон .first) -->
+  <section class="first">
+    <div class="outer">
+      <div class="inner">
+        <div class="bg">
+          <h2 class="section-heading">КОНТАКТЫ</h2>
+
+          <div class="panel-extra" aria-hidden="false">
+            <p>Вячеслав: <a href="tel:+79996020655" style="color:#fff;">+7 999 602-06-55</a></p>
+            <p>Если нужно — напишите нам в мессенджере или позвоните по телефону выше.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Финальный слайд -->
+  <section class="second">
+    <div class="outer">
+      <div class="inner">
+        <div class="bg">
+          <h2 class="section-heading">СПАСИБО — ЖДЁМ ВАС</h2>
+          <div class="panel-extra" aria-hidden="false">
+            <p>До встречи на празднике! Следите за обновлениями и приезжайте вовремя.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- счётчик -->
+  <div class="countdown" role="status" aria-live="polite" aria-atomic="true" aria-label="Обратный отсчёт до свадьбы">
+    <div class="countdown-item"><span id="days" class="countdown-number">00</span><span class="countdown-label">Дни</span></div>
+    <div class="countdown-item"><span id="hours" class="countdown-number">00</span><span class="countdown-label">Часы</span></div>
+    <div class="countdown-item"><span id="minutes" class="countdown-number">00</span><span class="countdown-label">Минуты</span></div>
+    <div class="countdown-item"><span id="seconds" class="countdown-number">00</span><span class="countdown-label">Секунды</span></div>
+  </div>
+
+  <!-- GSAP + SplitText (как в оригинале) -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/SplitText.min.js"></script>
+
+  <script>
+    /* Логика анимации (как в CodePen) — не менял, автоматически работает для любого количества секций */
+    const sections = document.querySelectorAll("section");
+    const images = document.querySelectorAll(".bg");
+    const headings = gsap.utils.toArray(".section-heading");
+    const outerWrappers = gsap.utils.toArray(".outer");
+    const innerWrappers = gsap.utils.toArray(".inner");
+
+    document.addEventListener("wheel", handleWheel);
+    document.addEventListener("touchstart", handleTouchStart, {passive: true});
+    document.addEventListener("touchmove", handleTouchMove, {passive: false});
+    document.addEventListener("touchend", handleTouchEnd, {passive: true});
+
+    let listening = false,
+      direction = "down",
+      current,
+      next = 0;
+
+    const touch = { startX: 0, startY: 0, dx: 0, dy: 0, startTime: 0, dt: 0 };
+    const tlDefaults = { ease: "slow.inOut", duration: 1.25 };
+
+    const splitHeadings = headings.map((heading) => {
+      return new SplitText(heading, { type: "chars, words, lines", linesClass: "clip-text" });
+    });
+
+    function revealSectionHeading() {
+      return gsap.to(splitHeadings[next].chars, {
+        autoAlpha: 1,
+        yPercent: 0,
+        duration: 1,
+        ease: "power2",
+        stagger: { each: 0.02, from: "random" }
+      });
+    }
+
+    gsap.set(outerWrappers, { yPercent: 100 });
+    gsap.set(innerWrappers, { yPercent: -100 });
+
+    function slideIn() {
+      if (current !== undefined) gsap.set(sections[current], { zIndex: 0 });
+
+      gsap.set(sections[next], { autoAlpha: 1, zIndex: 1 });
+      gsap.set(images[next], { yPercent: 0 });
+      gsap.set(splitHeadings[next].chars, { autoAlpha: 0, yPercent: 100 });
+
+      const tl = gsap.timeline({ paused: true, defaults: tlDefaults, onComplete: () => { listening = true; current = next; } })
+        .to([outerWrappers[next], innerWrappers[next]], { yPercent: 0 }, 0)
+        .from(images[next], { yPercent: 15 }, 0)
+        .add(revealSectionHeading(), 0);
+
+      if (current !== undefined) {
+        tl.add(gsap.to(images[current], { yPercent: -15, ...tlDefaults }), 0)
+          .add(gsap.timeline()
+            .set(outerWrappers[current], { yPercent: 100 })
+            .set(innerWrappers[current], { yPercent: -100 })
+            .set(images[current], { yPercent: 0 })
+            .set(sections[current], { autoAlpha: 0 }));
+      }
+
+      tl.play(0);
+    }
+
+    function slideOut() {
+      gsap.set(sections[current], { zIndex: 1 });
+      gsap.set(sections[next], { autoAlpha: 1, zIndex: 0 });
+      gsap.set(splitHeadings[next].chars, { autoAlpha: 0, yPercent: 100 });
+      gsap.set([outerWrappers[next], innerWrappers[next]], { yPercent: 0 });
+      gsap.set(images[next], { yPercent: 0 });
+
+      gsap.timeline({ defaults: tlDefaults, onComplete: () => { listening = true; current = next; } })
+        .to(outerWrappers[current], { yPercent: 100 }, 0)
+        .to(innerWrappers[current], { yPercent: -100 }, 0)
+        .to(images[current], { yPercent: 15 }, 0)
+        .from(images[next], { yPercent: -15 }, 0)
+        .add(revealSectionHeading(), ">-1")
+        .set(images[current], { yPercent: 0 });
+    }
+
+    function handleDirection() {
+      listening = false;
+      if (direction === "down") {
+        next = current + 1;
+        if (next >= sections.length) next = 0;
+        slideIn();
+      }
+      if (direction === "up") {
+        next = current - 1;
+        if (next < 0) next = sections.length - 1;
+        slideOut();
+      }
+    }
+
+    function handleWheel(e) {
+      if (!listening) return;
+      const w = (e.wheelDeltaY !== undefined) ? e.wheelDeltaY : -e.deltaY;
+      direction = w < 0 ? "down" : "up";
+      handleDirection();
+    }
+
+    function handleTouchStart(e) {
+      if (!listening) return;
+      const t = e.changedTouches[0];
+      touch.startX = t.pageX;
+      touch.startY = t.pageY;
+    }
+
+    function handleTouchMove(e) {
+      if (!listening) return;
+      e.preventDefault();
+    }
+
+    function handleTouchEnd(e) {
+      if (!listening) return;
+      const t = e.changedTouches[0];
+      touch.dx = t.pageX - touch.startX;
+      touch.dy = t.pageY - touch.startY;
+      if (touch.dy > 10) direction = "up";
+      if (touch.dy < -10) direction = "down";
+      handleDirection();
+    }
+
+    // старт
+    slideIn();
+
+    /* СЧЁТЧИК */
+    const countdownDate = new Date('2025-09-09T15:30:00+03:00'); // время свадьбы
+    const elDays = document.getElementById('days');
+    const elHours = document.getElementById('hours');
+    const elMinutes = document.getElementById('minutes');
+    const elSeconds = document.getElementById('seconds');
+
+    function pad(n){ return String(n).padStart(2,'0'); }
+
+    function updateCountdown(){
+      const now = Date.now();
+      const diff = countdownDate.getTime() - now;
+      if(diff <= 0){
+        if(elDays) elDays.textContent = '00';
+        if(elHours) elHours.textContent = '00';
+        if(elMinutes) elMinutes.textContent = '00';
+        if(elSeconds) elSeconds.textContent = '00';
+        return;
+      }
+      const days = Math.floor(diff / (1000*60*60*24));
+      const hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+      const minutes = Math.floor((diff % (1000*60*60)) / (1000*60));
+      const seconds = Math.floor((diff % (1000*60)) / 1000);
+
+      if(elDays) elDays.textContent = pad(days);
+      if(elHours) elHours.textContent = pad(hours);
+      if(elMinutes) elMinutes.textContent = pad(minutes);
+      if(elSeconds) elSeconds.textContent = pad(seconds);
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
+</body>
+</html>
